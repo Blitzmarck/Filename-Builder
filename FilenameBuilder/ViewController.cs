@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using AppKit;
@@ -19,8 +18,15 @@ namespace FilenameBuilder
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
             FNDataSource = new FilenameTableDataSource();
             CountRejectBtn.Hidden = true;
+        }
+
+        public override void ViewWillAppear()
+        {
+            // Override Auto tab order and set manual
+            View.Window.InitialFirstResponder = jobNumTxtBox;
         }
 
         public override NSObject RepresentedObject
@@ -49,9 +55,6 @@ namespace FilenameBuilder
                         prevFilename.Datasource = FNDataSource;
                     }
                     break;
-
-                default:
-                    break;
             }
         }
 
@@ -63,7 +66,7 @@ namespace FilenameBuilder
         {
             // Get inputs
             List<string> fStringArr = new List<string>(new string[] {
-                                        jobNumTxtBox.StringValue, 
+                                        jobNumTxtBox.StringValue,
                                         counterTxtBox.StringValue,
                                         totalPDFsTxtBox.StringValue,
                                         custCodeTxtBox.StringValue,
@@ -138,14 +141,14 @@ namespace FilenameBuilder
 
                     // Increment Counter
                     int count = int.Parse(fStringArr[1]), total = int.Parse(fStringArr[2]);
-                    if(count < total)
+                    if (count < total)
                     {
                         count++;
                         counterTxtBox.StringValue = count.ToString();
                     }
 
 
-                    if(fStringArr[0].Equals("000000"))
+                    if (fStringArr[0].Equals("000000"))
                     {
                         jobNumTxtBox.StringValue = "000000";
                     }
@@ -193,7 +196,7 @@ namespace FilenameBuilder
         partial void ClearButton(NSObject sender)
         {
 
-            jobNumTxtBox.StringValue = ""; 
+            jobNumTxtBox.StringValue = "";
             counterTxtBox.StringValue = "";
             totalPDFsTxtBox.StringValue = "";
             custCodeTxtBox.StringValue = "";
@@ -208,13 +211,13 @@ namespace FilenameBuilder
 
         partial void RemoveInvalidChar(NSObject sender)
         {
-            List<string> fieldsToCheck = new List<string>(new string[] { 
-                                         custCodeTxtBox.StringValue, 
+            List<string> fieldsToCheck = new List<string>(new string[] {
+                                         custCodeTxtBox.StringValue,
                                          campNameTxtBox.StringValue,
                                          origFNTxtBox.StringValue,
                                          stockTxtBox.StringValue});
 
-            for(int i  = 0;i < fieldsToCheck.Count;i++) 
+            for (int i = 0; i < fieldsToCheck.Count; i++)
             {
                 fieldsToCheck[i] = fieldsToCheck[i].Replace("_", " ").Replace(":", " ");
             }
@@ -252,16 +255,14 @@ namespace FilenameBuilder
             if (dlg.RunModal() == 1)
             {
                 int count = 0;
-                foreach (var item in dlg.Urls){ count++; }
+                foreach (var item in dlg.Urls) { count++; }
                 totalPDFsTxtBox.StringValue = count.ToString();
             }
         }
 
-
         #endregion Partial Methods
 
         #region Private Methods
-
 
         private void StepValue(NSStepper stepper, NSTextField fieldToModify, bool isLimited, int limit)
         {
@@ -309,6 +310,7 @@ namespace FilenameBuilder
             errorOutputBox.SizeToFit();
             notificationLabel.StringValue = "Errors Detected:";
         }
+
         #endregion Private Methods
     }
 }

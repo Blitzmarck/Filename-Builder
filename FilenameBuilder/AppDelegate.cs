@@ -16,6 +16,7 @@ namespace FilenameBuilder
         {
             return true;
         }
+
         #endregion Override Methods
     }
 }

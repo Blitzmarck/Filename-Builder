@@ -704,6 +704,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="nIZ-DD-i6F" id="sPr-dJ-TxE"/>
+                                </connections>
                             </textField>
                             <textField identifier="CounterLabel" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J7C-0c-NJq">
                                 <rect key="frame" x="115" y="428" width="53" height="17"/>
@@ -727,12 +730,13 @@
                                 </textFieldCell>
                                 <connections>
                                     <action selector="takeIntValueFrom:" target="iYN-R7-B6D" id="NqA-uv-XWO"/>
+                                    <outlet property="nextKeyView" destination="GBy-uq-YkX" id="ByY-4G-DKb"/>
                                 </connections>
                             </textField>
                             <stepper identifier="CounterStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iYN-R7-B6D">
                                 <rect key="frame" x="220" y="423" width="19" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <stepperCell key="cell" continuous="YES" alignment="left" minValue="1" maxValue="1000000000" doubleValue="1" id="8E9-j5-AsQ"/>
+                                <stepperCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="1" maxValue="1000000000" doubleValue="1" id="8E9-j5-AsQ"/>
                                 <connections>
                                     <action selector="CounterStepValueChanged:" target="XfG-lQ-9wD" id="UZ1-bh-0wM"/>
                                 </connections>
@@ -759,12 +763,13 @@
                                 </textFieldCell>
                                 <connections>
                                     <action selector="takeIntegerValueFrom:" target="Ess-8f-OVa" id="bwk-K6-T40"/>
+                                    <outlet property="nextKeyView" destination="KLm-wR-x6h" id="qiV-qV-vAo"/>
                                 </connections>
                             </textField>
                             <stepper identifier="TotalPDFsStepper" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ess-8f-OVa" userLabel="Total PDFs Step">
                                 <rect key="frame" x="220" y="391" width="19" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <stepperCell key="cell" continuous="YES" alignment="left" minValue="1" maxValue="1000000000" doubleValue="1" id="3KV-AE-1MW"/>
+                                <stepperCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" minValue="1" maxValue="1000000000" doubleValue="1" id="3KV-AE-1MW"/>
                                 <connections>
                                     <action selector="TotalPagesValueChanged:" target="XfG-lQ-9wD" id="uuJ-Rs-4Ae"/>
                                 </connections>
@@ -786,6 +791,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="h3Y-Fq-fqs" id="24d-LR-2mm"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Imj-31-Of2">
                                 <rect key="frame" x="64" y="330" width="104" height="17"/>
@@ -804,6 +812,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="ru7-xI-iIB" id="CbN-hR-oaA"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XMe-oV-46v">
                                 <rect key="frame" x="59" y="298" width="109" height="17"/>
@@ -822,6 +833,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="Xva-nh-88M" id="CiS-9C-C2W"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5b0-wg-hdm">
                                 <rect key="frame" x="529" y="460" width="40" height="17"/>
@@ -843,6 +857,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="R6d-HT-LZm" id="Ssb-Id-jDr"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m4U-TU-7e0">
                                 <rect key="frame" x="524" y="428" width="45" height="17"/>
@@ -864,6 +881,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="Qcq-mc-qhq" id="Bkr-kR-m5k"/>
+                                </connections>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qcq-mc-qhq" userLabel="Stock Box">
                                 <rect key="frame" x="575" y="393" width="96" height="22"/>
@@ -873,6 +893,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="Emz-eS-uso" id="oKp-5V-d2f"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FXy-5T-mdC">
                                 <rect key="frame" x="513" y="362" width="56" height="17"/>
@@ -903,6 +926,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="OrY-RP-9rc" id="H0D-9c-Jyd"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a5y-vk-KYz">
                                 <rect key="frame" x="490" y="330" width="79" height="17"/>
@@ -930,6 +956,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="Pg3-2B-wdE" id="j4E-cH-SNi"/>
+                                </connections>
                             </textField>
                             <button identifier="BuildBtn" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pg3-2B-wdE">
                                 <rect key="frame" x="283" y="141" width="90" height="32"/>
@@ -940,6 +969,7 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="BuildBtn:" target="XfG-lQ-9wD" id="z0A-0A-fmc"/>
+                                    <outlet property="nextKeyView" destination="g57-nD-DoG" id="EII-5P-Wmo"/>
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6C-tH-WvL" userLabel="Result Box">
@@ -996,6 +1026,7 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="GetPreviousFilenames:" target="XfG-lQ-9wD" id="wY4-ak-YoC"/>
+                                    <outlet property="nextKeyView" destination="URZ-hs-qKf" id="xQq-4t-6E4"/>
                                     <segue destination="w4W-DO-paD" kind="popover" identifier="ShowPreviousFilenames" popoverAnchorView="g57-nD-DoG" popoverBehavior="t" preferredEdge="maxY" id="Gqn-TH-d13"/>
                                 </connections>
                             </button>
@@ -1011,7 +1042,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dn4-KE-wjZ">
                                 <rect key="frame" x="242" y="427" width="67" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Reject?" bezelStyle="regularSquare" imagePosition="left" inset="2" id="I3t-Yf-XNQ">
+                                <buttonCell key="cell" type="check" title="Reject?" bezelStyle="regularSquare" imagePosition="left" refusesFirstResponder="YES" inset="2" id="I3t-Yf-XNQ">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -1022,7 +1053,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5st-6l-BWy">
                                 <rect key="frame" x="238" y="386" width="125" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Count Rejects" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oQQ-Zt-dzO">
+                                <buttonCell key="cell" type="push" title="Count Rejects" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oQQ-Zt-dzO">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -1033,7 +1064,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ohj-mr-w7I">
                                 <rect key="frame" x="583" y="211" width="170" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Remove Underscores" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Q6b-ce-wix">
+                                <buttonCell key="cell" type="push" title="Remove Underscores" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Q6b-ce-wix">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -1044,7 +1075,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FGt-Jp-cTx">
                                 <rect key="frame" x="623" y="186" width="91" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Clear All" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZdX-Th-k5e">
+                                <buttonCell key="cell" type="push" title="Clear All" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZdX-Th-k5e">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
