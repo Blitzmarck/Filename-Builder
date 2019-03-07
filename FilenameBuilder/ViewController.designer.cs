@@ -49,6 +49,12 @@ namespace FilenameBuilder
         AppKit.NSButton rejectCheck { get; set; }
 
         [Outlet]
+        AppKit.NSButton RejectFill { get; set; }
+
+        [Outlet]
+        AppKit.NSTextField RejectFillTxtBox { get; set; }
+
+        [Outlet]
         AppKit.NSTextField resultTxtBox { get; set; }
 
         [Outlet]
@@ -86,6 +92,9 @@ namespace FilenameBuilder
 
         [Action ("RejectCount:")]
         partial void RejectCount (Foundation.NSObject sender);
+
+        [Action ("RejectFillBtn:")]
+        partial void RejectFillBtn (Foundation.NSObject sender);
 
         [Action ("RemoveInvalidChar:")]
         partial void RemoveInvalidChar (Foundation.NSObject sender);
@@ -155,6 +164,11 @@ namespace FilenameBuilder
                 rejectCheck = null;
             }
 
+            if (RejectFillTxtBox != null) {
+                RejectFillTxtBox.Dispose ();
+                RejectFillTxtBox = null;
+            }
+
             if (resultTxtBox != null) {
                 resultTxtBox.Dispose ();
                 resultTxtBox = null;
@@ -188,6 +202,11 @@ namespace FilenameBuilder
             if (widthTxtBox != null) {
                 widthTxtBox.Dispose ();
                 widthTxtBox = null;
+            }
+
+            if (RejectFill != null) {
+                RejectFill.Dispose ();
+                RejectFill = null;
             }
         }
     }

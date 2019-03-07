@@ -48,13 +48,13 @@
             return string.Format("- {0} must be a number\n", typeName);
         }
 
-        public static string CheckFloat (string input, int type)
+        public static string CheckFloat(string input, int type)
         {
             string typeName = ((NameOfField)type).ToString().Replace('_', ' ');
             input = input.Replace(",", string.Empty);
 
             // Float Check
-            if((float.TryParse(input, out float p)) && input.Length > 0) 
+            if ((float.TryParse(input, out float p)) && input.Length > 0)
             {
                 if (float.Parse(input) <= 0)
                 {
@@ -95,7 +95,7 @@
 
         }
 
-        public static string CheckSemicolon(string inputString)
+        public static string CheckColon(string inputString)
         {
             if (!inputString.Contains(':'))
             {
@@ -103,5 +103,50 @@
             }
             return "- There cannot be any colons inputted\n";
         }
+
+        public static string CheckErrorFill(string inputString)
+        {
+            if (inputString.Length == 0)
+            {
+                return "- No input detected\n";
+            }
+            if (!inputString.Contains('_'))
+            {
+                return "- Invalid filename inputted\n";
+            }
+
+            string[] checkInputs = inputString.Split("_");
+            if (checkInputs.Length != 9)
+            {
+                return "- Invalid amount of underscores used";
+            }
+
+            if (!checkInputs[1].Contains("-") || !checkInputs[1].Contains("p") || checkInputs[1].Length != 4)
+            {
+                return "- Invalid Counter/Total PDFs entry";
+            }
+
+            if (!checkInputs[5].Contains("x"))
+            {
+                return "- Invalid Width/Length entry";
+            }
+
+            if (!checkInputs[7].Contains("Q") || checkInputs[7].Length == 1)
+            {
+                return "- Invalid Quantity entry";
+            }
+            if (!checkInputs[8].Contains("R") || checkInputs[8].Length == 1)
+            {
+                return "- Invalid Revision entry";
+            }
+
+            if (checkInputs[8].Contains("."))
+            {
+                return "- Please remove the .pdf extension";
+            }
+            return "";
+        }
+
+
     }
 }

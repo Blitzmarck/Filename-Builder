@@ -21,6 +21,8 @@ namespace FilenameBuilder
 
             FNDataSource = new FilenameTableDataSource();
             CountRejectBtn.Hidden = true;
+            RejectFill.Hidden = true;
+            RejectFillTxtBox.Hidden = true;
         }
 
         public override void ViewWillAppear()
@@ -61,6 +63,30 @@ namespace FilenameBuilder
         #endregion Override Methods
 
         #region Partial Methods
+
+        partial void CounterStepValueChanged(NSObject sender)
+        {
+            string counterVal = counterTxtBox.StringValue;
+
+            //Check if counter > total pages 
+            string checkValid = ErrorCheck.CheckNumerical(counterVal, 1, true) +
+                                ErrorCheck.CheckNumerical(totalPDFsTxtBox.StringValue, 2, true);
+
+            if (checkValid.Length == 0)
+            {
+                StepValue(CounterStep, counterTxtBox, true, int.Parse(totalPDFsTxtBox.StringValue));
+            }
+        }
+
+        partial void TotalPagesValueChanged(NSObject sender)
+        {
+            string totalPagesVal = totalPDFsTxtBox.StringValue;
+            string checkValid = ErrorCheck.CheckNumerical(totalPagesVal, 2, true);
+            if (checkValid.Length == 0)
+            {
+                StepValue(totalPDFsStep, totalPDFsTxtBox, false, 0);
+            }
+        }
 
         partial void BuildBtn(NSObject sender)
         {
@@ -126,7 +152,7 @@ namespace FilenameBuilder
 
                 //Check for Invalid character entries
                 sb.Append(ErrorCheck.CheckUnderscore(result) +
-                          ErrorCheck.CheckSemicolon(result));
+                          ErrorCheck.CheckColon(result));
 
                 if (sb.Length == 0)
                 {
@@ -139,7 +165,7 @@ namespace FilenameBuilder
                     notificationLabel.StringValue = "Success!";
                     resultTxtBox.SelectText(sender);
 
-                    // Increment Counter
+                    // Increment Counter Field
                     int count = int.Parse(fStringArr[1]), total = int.Parse(fStringArr[2]);
                     if (count < total)
                     {
@@ -167,30 +193,6 @@ namespace FilenameBuilder
         partial void GetPreviousFilenames(NSObject sender)
         {
             PerformSegue("ShowPreviousFilenames", this);
-        }
-
-        partial void CounterStepValueChanged(NSObject sender)
-        {
-            string counterVal = counterTxtBox.StringValue;
-
-            //Check if counter > total pages 
-            string checkValid = ErrorCheck.CheckNumerical(counterVal, 1, true) +
-                                ErrorCheck.CheckNumerical(totalPDFsTxtBox.StringValue, 2, true);
-
-            if (checkValid.Length == 0)
-            {
-                StepValue(CounterStep, counterTxtBox, true, int.Parse(totalPDFsTxtBox.StringValue));
-            }
-        }
-
-        partial void TotalPagesValueChanged(NSObject sender)
-        {
-            string totalPagesVal = totalPDFsTxtBox.StringValue;
-            string checkValid = ErrorCheck.CheckNumerical(totalPagesVal, 2, true);
-            if (checkValid.Length == 0)
-            {
-                StepValue(totalPDFsStep, totalPDFsTxtBox, false, 0);
-            }
         }
 
         partial void ClearButton(NSObject sender)
@@ -235,12 +237,16 @@ namespace FilenameBuilder
                 CountRejectBtn.Hidden = false;
                 totalPDFsTxtBox.Enabled = false;
                 totalPDFsStep.Enabled = false;
+                RejectFill.Hidden = false;
+                RejectFillTxtBox.Hidden = false;
             }
             else
             {
                 CountRejectBtn.Hidden = true;
                 totalPDFsTxtBox.Enabled = true;
                 totalPDFsStep.Enabled = true;
+                RejectFill.Hidden = true;
+                RejectFillTxtBox.Hidden = true;
             }
         }
 
@@ -258,6 +264,40 @@ namespace FilenameBuilder
                 foreach (var item in dlg.Urls) { count++; }
                 totalPDFsTxtBox.StringValue = count.ToString();
             }
+        }
+
+        partial void RejectFillBtn(NSObject sender)
+        {
+            errorOutputBox.StringValue = "";
+            StringBuilder sb = new StringBuilder();
+            string inputString = RejectFillTxtBox.StringValue;
+            sb.Append(ErrorCheck.CheckErrorFill(inputString));
+            if (sb.Length == 0)
+            {
+                List<string> splittedFN = SplitRejectFilename(inputString);
+
+                // put into fields
+                jobNumTxtBox.StringValue = splittedFN[0];
+                counterTxtBox.StringValue = splittedFN[1];
+                custCodeTxtBox.StringValue = splittedFN[2];
+                campNameTxtBox.StringValue = splittedFN[3];
+                origFNTxtBox.StringValue = splittedFN[4];
+                widthTxtBox.StringValue = splittedFN[5];
+                heightTxtBox.StringValue = splittedFN[6];
+                stockTxtBox.StringValue = splittedFN[7];
+                quantTxtBox.StringValue = splittedFN[8];
+
+                // Increment Revision
+                revVerTxtBox.StringValue = (int.Parse(splittedFN[9]) + 1).ToString();
+
+                notificationLabel.StringValue = "Success!";
+            }
+            else
+            {
+                DisplayErrors(sb);
+                RejectFillTxtBox.StringValue = "";
+            }
+
         }
 
         #endregion Partial Methods
@@ -309,6 +349,21 @@ namespace FilenameBuilder
             errorOutputBox.StringValue = sb.ToString();
             errorOutputBox.SizeToFit();
             notificationLabel.StringValue = "Errors Detected:";
+        }
+
+        private List<string> SplitRejectFilename(string filenameInput)
+        {
+            List<string> input = new List<string>(filenameInput.Split("_"));
+
+            // Format the strings as needed
+            string height = input[5].Split("x")[1];
+            input[1] = input[1].Split("-")[0].Replace("p", "");
+            input[5] = input[5].Split("x")[0];
+            input[7] = input[7].Replace("Q", "");
+            input[8] = input[8].Replace("R", "");
+            input.Insert(6, height);
+
+            return input;
         }
 
         #endregion Private Methods

@@ -961,7 +961,7 @@
                                 </connections>
                             </textField>
                             <button identifier="BuildBtn" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pg3-2B-wdE">
-                                <rect key="frame" x="283" y="141" width="90" height="32"/>
+                                <rect key="frame" x="275" y="196" width="90" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Build!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rzp-wY-YxY">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -973,7 +973,7 @@
                                 </connections>
                             </button>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6C-tH-WvL" userLabel="Result Box">
-                                <rect key="frame" x="20" y="20" width="710" height="120"/>
+                                <rect key="frame" x="20" y="133" width="710" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
                                 <textFieldCell key="cell" selectable="YES" continuous="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" id="Bfi-kV-f9b">
                                     <font key="font" metaFont="system"/>
@@ -982,10 +982,10 @@
                                 </textFieldCell>
                             </textField>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x92-A2-Nwr" userLabel="Error Box">
-                                <rect key="frame" x="168" y="181" width="415" height="70"/>
+                                <rect key="frame" x="20" y="20" width="710" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="OfO-yJ-560">
-                                    <rect key="frame" x="1" y="1" width="413" height="68"/>
+                                    <rect key="frame" x="1" y="1" width="708" height="68"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWz-sp-z8e" userLabel="Error Box">
@@ -994,10 +994,11 @@
                                             <textFieldCell key="cell" selectable="YES" continuous="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="No Errors" id="yI4-h6-UYu">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                     </subviews>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Sjf-E8-rfH">
                                     <rect key="frame" x="-100" y="-100" width="398" height="15"/>
@@ -1009,7 +1010,7 @@
                                 </scroller>
                             </scrollView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hPH-OD-9NK" userLabel="Notification Label">
-                                <rect key="frame" x="225" y="259" width="300" height="23"/>
+                                <rect key="frame" x="221" y="98" width="300" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Press Build to create your filename " id="CoH-xN-G6L">
                                     <font key="font" size="13" name="Tahoma-Bold"/>
@@ -1018,7 +1019,7 @@
                                 </textFieldCell>
                             </textField>
                             <button identifier="PrevFilenamesBtn" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g57-nD-DoG">
-                                <rect key="frame" x="378" y="141" width="90" height="32"/>
+                                <rect key="frame" x="370" y="196" width="90" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Previous" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="z9C-BY-d6G">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1062,7 +1063,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ohj-mr-w7I">
-                                <rect key="frame" x="583" y="211" width="170" height="32"/>
+                                <rect key="frame" x="137" y="255" width="170" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Remove Underscores" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Q6b-ce-wix">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1073,7 +1074,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FGt-Jp-cTx">
-                                <rect key="frame" x="623" y="186" width="91" height="32"/>
+                                <rect key="frame" x="496" y="255" width="91" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Clear All" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ZdX-Th-k5e">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1083,12 +1084,34 @@
                                     <action selector="ClearButton:" target="XfG-lQ-9wD" id="jGG-R7-vP0"/>
                                 </connections>
                             </button>
+                            <textField identifier="RejectString" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dwO-wz-zhl" userLabel="Reject String">
+                                <rect key="frame" x="20" y="232" width="629" height="22"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="000000_p1-1_ABC_Campaign Name_Original Filename_100x100_Stock_Q1_R1" drawsBackground="YES" id="jpL-jX-NaX">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button identifier="RejectFillBtn" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V4y-Lu-Etq" userLabel="Reject Fill">
+                                <rect key="frame" x="667" y="225" width="57" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Fill" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bvz-2u-NiB">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="RejectFillBtn:" target="XfG-lQ-9wD" id="DCv-vJ-zOk"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="CountRejectBtn" destination="5st-6l-BWy" id="396-FY-85K"/>
                         <outlet property="CounterStep" destination="iYN-R7-B6D" id="6gP-Pe-MjV"/>
                         <outlet property="HideCountRejectBtn" destination="5st-6l-BWy" id="71X-xi-DIZ"/>
+                        <outlet property="RejectFill" destination="V4y-Lu-Etq" id="pFU-zb-Lns"/>
+                        <outlet property="RejectFillTxtBox" destination="dwO-wz-zhl" id="icX-vy-QAh"/>
                         <outlet property="ScrollView" destination="x92-A2-Nwr" id="3ak-Fz-g9b"/>
                         <outlet property="campNameTxtBox" destination="h3Y-Fq-fqs" id="L7q-U0-uDS"/>
                         <outlet property="counterTxtBox" destination="nIZ-DD-i6F" id="YXs-ch-b6X"/>
