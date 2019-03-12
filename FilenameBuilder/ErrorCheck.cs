@@ -15,7 +15,11 @@
             Height,
             Stock,
             Quantity,
-            Revision_Version
+            Revision_Version,
+            Finishing,
+            Colour,
+            Comment,
+            File_Path
         };
 
         public static string CheckEmpty(string input, int type)
@@ -92,16 +96,19 @@
                 return "";
             }
             return "- There cannot be any underscores inputted\n";
-
         }
 
-        public static string CheckColon(string inputString)
+        public static string CheckInvalidChar(string inputString)
         {
-            if (!inputString.Contains(':'))
+            if (inputString.Contains(':'))
             {
-                return "";
+                return "- There cannot be any colons inputted\n";
             }
-            return "- There cannot be any colons inputted\n";
+            if (inputString.Contains('_'))
+            {
+                return "- There cannot be any underscores inputted\n";
+            }
+            return "";
         }
 
         public static string CheckErrorFill(string inputString)
@@ -116,6 +123,7 @@
             }
 
             string[] checkInputs = inputString.Split("_");
+
             if (checkInputs.Length != 9)
             {
                 return "- Invalid amount of underscores used";
@@ -135,6 +143,7 @@
             {
                 return "- Invalid Quantity entry";
             }
+
             if (!checkInputs[8].Contains("R") || checkInputs[8].Length == 1)
             {
                 return "- Invalid Revision entry";
@@ -146,7 +155,6 @@
             }
             return "";
         }
-
 
     }
 }

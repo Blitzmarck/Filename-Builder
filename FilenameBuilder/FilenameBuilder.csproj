@@ -60,6 +60,8 @@
     <Reference Include="Plugin.Clipboard">
       <HintPath>..\packages\Xamarin.Plugins.Clipboard.2.2.1\lib\Xamarin.Mac20\Plugin.Clipboard.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -98,6 +100,7 @@
       <DependentUpon>PrevFilenameController.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorCheck.cs" />
+    <Compile Include="XMLClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />

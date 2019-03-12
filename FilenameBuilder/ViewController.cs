@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 using AppKit;
 using Foundation;
 
@@ -10,6 +13,10 @@ namespace FilenameBuilder
     {
 
         private FilenameTableDataSource FNDataSource;
+
+        private List<string> fnStringArr = null;
+
+        private List<NSTextField> allTextFields;
 
         public ViewController(IntPtr handle) : base(handle) { }
 
@@ -21,14 +28,32 @@ namespace FilenameBuilder
 
             FNDataSource = new FilenameTableDataSource();
             CountRejectBtn.Hidden = true;
-            RejectFill.Hidden = true;
-            RejectFillTxtBox.Hidden = true;
+            allTextFields = new List<NSTextField>
+            {
+                jobNumTxtBox,
+                counterTxtBox,
+                totalPDFsTxtBox,
+                custCodeTxtBox,
+                campNameTxtBox,
+                origFNTxtBox,
+                widthTxtBox,
+                heightTxtBox,
+                stockTxtBox,
+                quantTxtBox,
+                revVerTxtBox,
+                finishingTxtBox,
+                colourTxtBox,
+                commentTxtBox,
+                filePathTxtBox,
+                errorOutputBox,
+                resultTxtBox
+            };
         }
 
         public override void ViewWillAppear()
         {
             // Override Auto tab order and set manual
-            View.Window.InitialFirstResponder = jobNumTxtBox;
+            View.Window.InitialFirstResponder = allTextFields[0];
         }
 
         public override NSObject RepresentedObject
@@ -88,165 +113,20 @@ namespace FilenameBuilder
             }
         }
 
-        partial void BuildBtn(NSObject sender)
-        {
-            // Get inputs
-            List<string> fStringArr = new List<string>(new string[] {
-                                        jobNumTxtBox.StringValue,
-                                        counterTxtBox.StringValue,
-                                        totalPDFsTxtBox.StringValue,
-                                        custCodeTxtBox.StringValue,
-                                        campNameTxtBox.StringValue,
-                                        origFNTxtBox.StringValue,
-                                        widthTxtBox.StringValue,
-                                        heightTxtBox.StringValue,
-                                        stockTxtBox.StringValue,
-                                        quantTxtBox.StringValue,
-                                        revVerTxtBox.StringValue});
-
-            // Clear output fields
-            errorOutputBox.StringValue = resultTxtBox.StringValue = "";
-
-
-            // Error Check
-            StringBuilder sb = new StringBuilder();
-            sb.Append(ErrorCheck.CheckNumerical(fStringArr[0], 0, false)); /*ErrorCheck.CheckNumerical(jobNumTxtBox.StringValue, 0, false)*/
-
-            // Special Counter/Total error Check
-            if (rejectCheck.State == NSCellStateValue.On)
-            {
-                sb.Append(ErrorCheck.CheckNumerical(fStringArr[1], 1, true) +
-                          ErrorCheck.CheckNumerical(fStringArr[2], 2, true));
-            }
-            else
-            {
-                sb.Append(ErrorCheck.CheckPages(fStringArr[1], fStringArr[2]));
-            }
-
-            sb.Append(
-                      ErrorCheck.CheckEmpty(fStringArr[3], 3) +
-                      ErrorCheck.CheckEmpty(fStringArr[4], 4) +
-                      ErrorCheck.CheckEmpty(fStringArr[5], 5) +
-                      ErrorCheck.CheckFloat(fStringArr[6], 6) +
-                      ErrorCheck.CheckFloat(fStringArr[7], 7) +
-                      ErrorCheck.CheckEmpty(fStringArr[8], 8) +
-                      ErrorCheck.CheckNumerical(fStringArr[9], 9, true) +
-                      ErrorCheck.CheckNumerical(fStringArr[10], 10, true));
-
-            if (sb.Length == 0)
-            {
-                //Create filename string
-                string result = string.Format("{0}_p{1}-{2}_{3}_{4}_{5}_{6}x{7}_{8}_Q{9}_R{10}",
-                                                        fStringArr[0]/*jobNumTxtBox.StringValue*/,
-                                                        fStringArr[1],
-                                                        fStringArr[2],
-                                                        fStringArr[3],
-                                                        fStringArr[4],
-                                                        fStringArr[5],
-                                                        RemoveFloatComma(fStringArr[6]),
-                                                        RemoveFloatComma(fStringArr[7]),
-                                                        fStringArr[8],
-                                                        RemoveIntComma(fStringArr[9]),
-                                                        fStringArr[10]
-                                                        );
-
-                //Check for Invalid character entries
-                sb.Append(ErrorCheck.CheckUnderscore(result) +
-                          ErrorCheck.CheckColon(result));
-
-                if (sb.Length == 0)
-                {
-                    // Display created string and add to Previous Filename table
-                    resultTxtBox.StringValue = result;
-                    FNDataSource.Filenames.Add(new Filename(FNDataSource.FileID, result));
-                    FNDataSource.FileID++;
-
-                    // Notify success and highlight created string
-                    notificationLabel.StringValue = "Success!";
-                    resultTxtBox.SelectText(sender);
-
-                    // Increment Counter Field
-                    int count = int.Parse(fStringArr[1]), total = int.Parse(fStringArr[2]);
-                    if (count < total)
-                    {
-                        count++;
-                        counterTxtBox.StringValue = count.ToString();
-                    }
-
-
-                    if (fStringArr[0].Equals("000000"))
-                    {
-                        jobNumTxtBox.StringValue = "000000";
-                    }
-                }
-                else
-                {
-                    DisplayErrors(sb);
-                }
-            }
-            else
-            {
-                DisplayErrors(sb);
-            }
-        }
-
-        partial void GetPreviousFilenames(NSObject sender)
-        {
-            PerformSegue("ShowPreviousFilenames", this);
-        }
-
-        partial void ClearButton(NSObject sender)
-        {
-
-            jobNumTxtBox.StringValue = "";
-            counterTxtBox.StringValue = "";
-            totalPDFsTxtBox.StringValue = "";
-            custCodeTxtBox.StringValue = "";
-            campNameTxtBox.StringValue = "";
-            origFNTxtBox.StringValue = "";
-            widthTxtBox.StringValue = "";
-            heightTxtBox.StringValue = "";
-            stockTxtBox.StringValue = "";
-            quantTxtBox.StringValue = "";
-            revVerTxtBox.StringValue = "";
-        }
-
-        partial void RemoveInvalidChar(NSObject sender)
-        {
-            List<string> fieldsToCheck = new List<string>(new string[] {
-                                         custCodeTxtBox.StringValue,
-                                         campNameTxtBox.StringValue,
-                                         origFNTxtBox.StringValue,
-                                         stockTxtBox.StringValue});
-
-            for (int i = 0; i < fieldsToCheck.Count; i++)
-            {
-                fieldsToCheck[i] = fieldsToCheck[i].Replace("_", " ").Replace(":", " ");
-            }
-
-            custCodeTxtBox.StringValue = fieldsToCheck[0];
-            campNameTxtBox.StringValue = fieldsToCheck[1];
-            origFNTxtBox.StringValue = fieldsToCheck[2];
-            stockTxtBox.StringValue = fieldsToCheck[3];
-        }
-
         partial void RejectCheckbox(NSObject sender)
         {
             if (rejectCheck.State == NSCellStateValue.On)
             {
                 CountRejectBtn.Hidden = false;
                 totalPDFsTxtBox.Enabled = false;
+                totalPDFsTxtBox.StringValue = "";
                 totalPDFsStep.Enabled = false;
-                RejectFill.Hidden = false;
-                RejectFillTxtBox.Hidden = false;
             }
             else
             {
                 CountRejectBtn.Hidden = true;
                 totalPDFsTxtBox.Enabled = true;
                 totalPDFsStep.Enabled = true;
-                RejectFill.Hidden = true;
-                RejectFillTxtBox.Hidden = true;
             }
         }
 
@@ -261,43 +141,293 @@ namespace FilenameBuilder
             if (dlg.RunModal() == 1)
             {
                 int count = 0;
-                foreach (var item in dlg.Urls) { count++; }
+                foreach (var item in dlg.Urls)
+                {
+                    count++;
+                }
                 totalPDFsTxtBox.StringValue = count.ToString();
             }
         }
 
-        partial void RejectFillBtn(NSObject sender)
+        partial void RemoveInvalidChar(NSObject sender)
         {
-            errorOutputBox.StringValue = "";
-            StringBuilder sb = new StringBuilder();
-            string inputString = RejectFillTxtBox.StringValue;
-            sb.Append(ErrorCheck.CheckErrorFill(inputString));
-            if (sb.Length == 0)
+            List<NSTextField> fieldsToCheck = new List<NSTextField>{
+                                         custCodeTxtBox,
+                                         campNameTxtBox,
+                                         origFNTxtBox,
+                                         stockTxtBox,
+                                         finishingTxtBox,
+                                         colourTxtBox,
+                                         commentTxtBox};
+
+            for (int i = 0; i < fieldsToCheck.Count; i++)
             {
-                List<string> splittedFN = SplitRejectFilename(inputString);
+                fieldsToCheck[i].StringValue = fieldsToCheck[i].StringValue.Replace("_", " ").Replace(":", " ");
+            }
+        }
 
-                // put into fields
-                jobNumTxtBox.StringValue = splittedFN[0];
-                counterTxtBox.StringValue = splittedFN[1];
-                custCodeTxtBox.StringValue = splittedFN[2];
-                campNameTxtBox.StringValue = splittedFN[3];
-                origFNTxtBox.StringValue = splittedFN[4];
-                widthTxtBox.StringValue = splittedFN[5];
-                heightTxtBox.StringValue = splittedFN[6];
-                stockTxtBox.StringValue = splittedFN[7];
-                quantTxtBox.StringValue = splittedFN[8];
+        partial void ImportXML(NSObject sender)
+        {
+            // User selects XML File
+            using(var dlg = NSOpenPanel.OpenPanel)
+            {
+                dlg.CanChooseFiles = true;
+                dlg.CanChooseDirectories = false;
+                dlg.AllowsMultipleSelection = false;
+                dlg.AllowedFileTypes = new string[] { "xml" };
 
-                // Increment Revision
-                revVerTxtBox.StringValue = (int.Parse(splittedFN[9]) + 1).ToString();
+                if (dlg.RunModal() == 1)
+                {
+                    // Check filename string array exists
+                    if (fnStringArr != null)
+                    {
+                        fnStringArr.Clear();
+                    }
+                    else
+                    {
+                        fnStringArr = new List<string>();
+                    }
 
-                notificationLabel.StringValue = "Success!";
+                    // Import XML
+                    using (NSAlert alart = new NSAlert())
+                    {
+                        alart.MessageText = "Import XML File";
+                        try
+                        {
+                            List<string> importedXMLData = XMLClass.ImportXML(dlg.Url.Path);
+                            fnStringArr.AddRange(importedXMLData);
+
+                            // Remove JobName (Unneeded)
+                            fnStringArr.RemoveAt(4);
+
+                            for (int i = 0; i < fnStringArr.Count; i++)
+                            {
+                                //Reject file and Total PDFs
+                                if (rejectCheck.State == NSCellStateValue.On && i == 2)
+                                {
+                                    continue;
+                                }
+                                if (rejectCheck.State == NSCellStateValue.On && i == 10)
+                                {
+                                    fnStringArr[i] = (int.Parse(fnStringArr[i]) + 1).ToString();
+                                }
+
+                                allTextFields[i].StringValue = fnStringArr[i];
+                            }
+                            alart.InformativeText = "Successful import!";
+                        }
+                        catch (Exception)
+                        {
+                            alart.InformativeText = "The import failed, please ensure your XML document is correct";
+                        }
+                        alart.RunModal();
+                    }
+                }
+            }
+
+        }
+
+        partial void ClearButton(NSObject sender)
+        {
+            foreach (var item in allTextFields)
+            {
+                item.StringValue = "";
+            }
+        }
+
+        partial void GetFilePath(NSObject sender)
+        {
+            using (var dlg = NSOpenPanel.OpenPanel) 
+            {
+                dlg.CanChooseFiles = false;
+                dlg.CanChooseDirectories = true;
+                dlg.AllowsMultipleSelection = false;
+
+                if (dlg.RunModal() == 1)
+                {
+                    filePathTxtBox.StringValue = dlg.DirectoryUrl.Path;
+                }
+            };
+        }
+
+        partial void BuildBtn(NSObject sender)
+        {
+            // Get inputs
+            fnStringArr = new List<string>(new string[] {
+                                        jobNumTxtBox.StringValue,
+                                        counterTxtBox.StringValue,
+                                        totalPDFsTxtBox.StringValue,
+                                        custCodeTxtBox.StringValue,
+                                        campNameTxtBox.StringValue,
+                                        origFNTxtBox.StringValue,
+                                        widthTxtBox.StringValue,
+                                        heightTxtBox.StringValue,
+                                        stockTxtBox.StringValue,
+                                        quantTxtBox.StringValue,
+                                        revVerTxtBox.StringValue,
+                                        finishingTxtBox.StringValue,
+                                        colourTxtBox.StringValue,
+                                        commentTxtBox.StringValue});
+
+            string filePath = filePathTxtBox.StringValue;
+
+            // Clear output fields
+            errorOutputBox.StringValue = resultTxtBox.StringValue = "";
+
+            // Error Check
+            StringBuilder sb = new StringBuilder();
+
+            // if reject, only check numerical, else check numerical & counter < total
+            if (rejectCheck.State == NSCellStateValue.On)
+            {
+                sb.Append(ErrorCheck.CheckNumerical(fnStringArr[1], 1, true) +
+                          ErrorCheck.CheckNumerical(fnStringArr[2], 2, true));
             }
             else
             {
-                DisplayErrors(sb);
-                RejectFillTxtBox.StringValue = "";
+                sb.Append(ErrorCheck.CheckPages(fnStringArr[1], fnStringArr[2]));
             }
 
+            sb.Append(ErrorCheck.CheckNumerical(fnStringArr[0], 0, false) +
+                      ErrorCheck.CheckEmpty(fnStringArr[3], 3) +
+                      ErrorCheck.CheckEmpty(fnStringArr[4], 4) +
+                      ErrorCheck.CheckEmpty(fnStringArr[5], 5) +
+                      ErrorCheck.CheckFloat(fnStringArr[6], 6) +
+                      ErrorCheck.CheckFloat(fnStringArr[7], 7) +
+                      ErrorCheck.CheckEmpty(fnStringArr[8], 8) +
+                      ErrorCheck.CheckNumerical(fnStringArr[9], 9, true) +
+                      ErrorCheck.CheckNumerical(fnStringArr[10], 10, true) +
+                      ErrorCheck.CheckEmpty(fnStringArr[11], 11) +
+                      ErrorCheck.CheckEmpty(fnStringArr[12], 12) +
+                      ErrorCheck.CheckEmpty(fnStringArr[13], 13) +
+                      ErrorCheck.CheckEmpty(filePath, 14));
+
+            //Check for Invalid Characters
+            foreach (var item in fnStringArr)
+            {
+                sb.Append(ErrorCheck.CheckInvalidChar(item));
+            }
+
+            // If any errors, display to user and return
+            if (sb.Length != 0)
+            {
+                DisplayErrors(sb);
+                return;
+            }
+
+            string folderNameString = string.Format("{0}_{1}", fnStringArr[0], fnStringArr[4]);
+
+
+            string fileNameString = string.Format("{0}_{1}", fnStringArr[0], fnStringArr[5]);
+
+            string newFilePath;
+            //If Reject
+            if (rejectCheck.State == NSCellStateValue.On)
+            {
+                newFilePath = filePath + "/Reject";
+            }
+            else
+            {
+                newFilePath = filePath + "/" + folderNameString;
+            }
+
+            // Folder Creation
+            try
+            {
+                if (!Directory.Exists(newFilePath))
+                {
+                    Directory.CreateDirectory(newFilePath);
+                }
+            }
+            catch (Exception)
+            {
+                sb.Append("- Unable to create folder\n" + newFilePath);
+                DisplayErrors(sb);
+                return;
+            }
+
+            // XML Creation
+            bool saveOK = XMLClass.SaveXMLToFile(XMLClass.CreateXML(fnStringArr), newFilePath + "/" + fileNameString + ".xml");
+
+            if (!saveOK)
+            {
+                sb.Append("- File Path is not valid\n");
+                DisplayErrors(sb);
+                return;
+            }
+
+            // File Move
+            try
+            {
+                bool found = false;
+                foreach (string currFile in Directory.EnumerateFiles(filePath))
+                {
+                    if (found)
+                    {
+                        break;
+                    }
+
+                    string extension = Path.GetExtension(currFile);
+                    if(extension.Equals(".xml"))
+                    {
+                        continue;
+                    }
+
+                    // Format and compare
+                    string currFileName = Path.GetFileNameWithoutExtension(currFile).Replace("_", " ").Replace(":", " ");
+                    // currFileName = currFileName.Split("/").Last().Split(".")[0];
+                    if (currFileName.Equals(fnStringArr[5]) || currFileName.Equals(fileNameString.Replace("_", " ")))
+                    {
+
+                        // Move & Rename
+                        string currLoc = filePath + "/" + Path.GetFileName(currFile);
+                        string newLoc = newFilePath + "/" + fileNameString + extension;
+                        File.Move(currLoc, newLoc);
+                        found = true;
+                    }
+                }
+                if (!found)
+                {
+                    sb.Append("- 404 File not Found. Must manually move file");
+                }
+
+            }
+            catch (Exception)
+            {
+                sb.Append("-Unable to Move file");
+            }
+            if(sb.Length != 0)
+            {
+                DisplayErrors(sb);
+            }
+
+            // Display & add to Previous Filename table
+            resultTxtBox.StringValue = fileNameString;
+            FNDataSource.Filenames.Add(new Filename(FNDataSource.FileID, fileNameString));
+            FNDataSource.FileID++;
+
+            // Notify success and highlight
+            notificationLabel.StringValue = "Success!";
+            resultTxtBox.SelectText(sender);
+
+            // Increment Page Counter Field
+            int count = int.Parse(fnStringArr[1]), total = int.Parse(fnStringArr[2]);
+            if (count < total)
+            {
+                count++;
+                counterTxtBox.StringValue = count.ToString();
+            }
+
+            if (fnStringArr[0].Equals("000000"))
+            {
+                jobNumTxtBox.StringValue = "000000";
+            }
+
+        }
+
+        partial void GetPreviousFilenames(NSObject sender)
+        {
+            PerformSegue("ShowPreviousFilenames", this);
         }
 
         #endregion Partial Methods
@@ -346,24 +476,25 @@ namespace FilenameBuilder
         private void DisplayErrors(StringBuilder sb)
         {
             // Display error messages
+            notificationLabel.StringValue = "Errors Detected:";
             errorOutputBox.StringValue = sb.ToString();
             errorOutputBox.SizeToFit();
-            notificationLabel.StringValue = "Errors Detected:";
+            sb.Clear();
         }
 
-        private List<string> SplitRejectFilename(string filenameInput)
+        private List<string> SplitRejectFilename(string fnInput)
         {
-            List<string> input = new List<string>(filenameInput.Split("_"));
+            List<string> fnOutput = new List<string>(fnInput.Split("_"));
 
             // Format the strings as needed
-            string height = input[5].Split("x")[1];
-            input[1] = input[1].Split("-")[0].Replace("p", "");
-            input[5] = input[5].Split("x")[0];
-            input[7] = input[7].Replace("Q", "");
-            input[8] = input[8].Replace("R", "");
-            input.Insert(6, height);
+            string height = fnOutput[5].Split("x")[1];
+            fnOutput[1] = fnOutput[1].Split("-")[0].Replace("p", "");
+            fnOutput[5] = fnOutput[5].Split("x")[0];
+            fnOutput[7] = fnOutput[7].Replace("Q", "");
+            fnOutput[8] = fnOutput[8].Replace("R", "");
+            fnOutput.Insert(6, height);
 
-            return input;
+            return fnOutput;
         }
 
         #endregion Private Methods
