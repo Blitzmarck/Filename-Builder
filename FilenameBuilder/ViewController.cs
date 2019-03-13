@@ -18,6 +18,13 @@ namespace FilenameBuilder
 
         private List<NSTextField> allTextFields;
 
+        private enum AllowedFiletypes
+        {
+            xml,
+            pdf,
+            ai
+        }
+
         public ViewController(IntPtr handle) : base(handle) { }
 
         #region Override Methods
@@ -136,7 +143,11 @@ namespace FilenameBuilder
             dlg.CanChooseFiles = true;
             dlg.CanChooseDirectories = false;
             dlg.AllowsMultipleSelection = true;
-            dlg.AllowedFileTypes = new string[] { "pdf", "ai" };
+            dlg.AllowedFileTypes = new string[] 
+            {
+                AllowedFiletypes.pdf.ToString(),
+                AllowedFiletypes.ai.ToString()
+            };
 
             if (dlg.RunModal() == 1)
             {
@@ -174,7 +185,10 @@ namespace FilenameBuilder
                 dlg.CanChooseFiles = true;
                 dlg.CanChooseDirectories = false;
                 dlg.AllowsMultipleSelection = false;
-                dlg.AllowedFileTypes = new string[] { "xml" };
+                dlg.AllowedFileTypes = new string[] 
+                { 
+                    AllowedFiletypes.xml.ToString() 
+                };
 
                 if (dlg.RunModal() == 1)
                 {
@@ -252,7 +266,10 @@ namespace FilenameBuilder
 
         partial void BuildBtn(NSObject sender)
         {
-            // Get inputs
+            // Clear output fields
+            errorOutputBox.StringValue = resultTxtBox.StringValue = "";
+
+            // Get data
             fnStringArr = new List<string>(new string[] {
                                         jobNumTxtBox.StringValue,
                                         counterTxtBox.StringValue,
@@ -271,13 +288,10 @@ namespace FilenameBuilder
 
             string filePath = filePathTxtBox.StringValue;
 
-            // Clear output fields
-            errorOutputBox.StringValue = resultTxtBox.StringValue = "";
-
-            // Error Check
+            /**Error Check**/
             StringBuilder sb = new StringBuilder();
 
-            // if reject, only check numerical, else check numerical & counter < total
+            // Counter/Total PDFs have special check when reject
             if (rejectCheck.State == NSCellStateValue.On)
             {
                 sb.Append(ErrorCheck.CheckNumerical(fnStringArr[1], 1, true) +
@@ -302,24 +316,22 @@ namespace FilenameBuilder
                       ErrorCheck.CheckEmpty(fnStringArr[13], 13) +
                       ErrorCheck.CheckEmpty(filePath, 14));
 
-            //Check for Invalid Characters
+            // Invalid Char Check
             foreach (var item in fnStringArr)
             {
                 sb.Append(ErrorCheck.CheckInvalidChar(item));
             }
 
-            // If any errors, display to user and return
+            // Errors found are displayed and build stopped
             if (sb.Length != 0)
             {
                 DisplayErrors(sb);
                 return;
             }
 
+            /**Renaming/Moving**/
             string folderNameString = string.Format("{0}_{1}", fnStringArr[0], fnStringArr[4]);
-
-
             string fileNameString = string.Format("{0}_{1}", fnStringArr[0], fnStringArr[5]);
-
             string newFilePath;
             //If Reject
             if (rejectCheck.State == NSCellStateValue.On)
@@ -346,7 +358,16 @@ namespace FilenameBuilder
                 return;
             }
 
-            // XML Creation
+            // Rename/Move
+            sb.Append(MoveAndRenameFile(filePath, newFilePath, fileNameString));
+
+            if(sb.Length != 0)
+            {
+                DisplayErrors(sb);
+                // return;
+            }
+
+            /**XML Creation**/
             bool saveOK = XMLClass.SaveXMLToFile(XMLClass.CreateXML(fnStringArr), newFilePath + "/" + fileNameString + ".xml");
 
             if (!saveOK)
@@ -356,61 +377,16 @@ namespace FilenameBuilder
                 return;
             }
 
-            // File Move
-            try
-            {
-                bool found = false;
-                foreach (string currFile in Directory.EnumerateFiles(filePath))
-                {
-                    if (found)
-                    {
-                        break;
-                    }
-
-                    string extension = Path.GetExtension(currFile);
-                    if(extension.Equals(".xml"))
-                    {
-                        continue;
-                    }
-
-                    // Format and compare
-                    string currFileName = Path.GetFileNameWithoutExtension(currFile).Replace("_", " ").Replace(":", " ");
-                    // currFileName = currFileName.Split("/").Last().Split(".")[0];
-                    if (currFileName.Equals(fnStringArr[5]) || currFileName.Equals(fileNameString.Replace("_", " ")))
-                    {
-
-                        // Move & Rename
-                        string currLoc = filePath + "/" + Path.GetFileName(currFile);
-                        string newLoc = newFilePath + "/" + fileNameString + extension;
-                        File.Move(currLoc, newLoc);
-                        found = true;
-                    }
-                }
-                if (!found)
-                {
-                    sb.Append("- 404 File not Found. Must manually move file");
-                }
-
-            }
-            catch (Exception)
-            {
-                sb.Append("-Unable to Move file");
-            }
-            if(sb.Length != 0)
-            {
-                DisplayErrors(sb);
-            }
-
-            // Display & add to Previous Filename table
-            resultTxtBox.StringValue = fileNameString;
+            /**Add to Previous Filename table**/
             FNDataSource.Filenames.Add(new Filename(FNDataSource.FileID, fileNameString));
             FNDataSource.FileID++;
 
-            // Notify success and highlight
+            /**Display and Notify user**/
+            resultTxtBox.StringValue = fileNameString;
             notificationLabel.StringValue = "Success!";
             resultTxtBox.SelectText(sender);
 
-            // Increment Page Counter Field
+            // /**Page Counter increment**/
             int count = int.Parse(fnStringArr[1]), total = int.Parse(fnStringArr[2]);
             if (count < total)
             {
@@ -422,7 +398,6 @@ namespace FilenameBuilder
             {
                 jobNumTxtBox.StringValue = "000000";
             }
-
         }
 
         partial void GetPreviousFilenames(NSObject sender)
@@ -463,16 +438,6 @@ namespace FilenameBuilder
             stepper.IntValue = 0;
         }
 
-        private int RemoveIntComma(string inputString)
-        {
-            return int.Parse(inputString.Replace(",", string.Empty));
-        }
-
-        private float RemoveFloatComma(string inputString)
-        {
-            return float.Parse(inputString.Replace(",", string.Empty));
-        }
-
         private void DisplayErrors(StringBuilder sb)
         {
             // Display error messages
@@ -482,19 +447,59 @@ namespace FilenameBuilder
             sb.Clear();
         }
 
-        private List<string> SplitRejectFilename(string fnInput)
+        private StringBuilder MoveAndRenameFile(string oldFilePath, string newFilePath, string fileName)
         {
-            List<string> fnOutput = new List<string>(fnInput.Split("_"));
+            StringBuilder sb = new StringBuilder();
+            try
+            {
+                bool fileFound = false;
+                foreach (string currFile in Directory.EnumerateFiles(oldFilePath))
+                {
+                    // Get filename
+                    string currFileName = Path.GetFileNameWithoutExtension(currFile).Replace("_", " ").Replace(":", " ");
 
-            // Format the strings as needed
-            string height = fnOutput[5].Split("x")[1];
-            fnOutput[1] = fnOutput[1].Split("-")[0].Replace("p", "");
-            fnOutput[5] = fnOutput[5].Split("x")[0];
-            fnOutput[7] = fnOutput[7].Replace("Q", "");
-            fnOutput[8] = fnOutput[8].Replace("R", "");
-            fnOutput.Insert(6, height);
+                    // File Comparison
+                    bool fileCompare = (currFileName.Equals(fnStringArr[5]) || currFileName.Equals(fileName.Replace("_", " ")));
 
-            return fnOutput;
+                    // Found file
+                    if (fileCompare)
+                    {
+                        // Get Extension
+                        string fileExt = Path.GetExtension(currFile);
+
+                        // If old XML, delete
+                        if (fileExt.Equals(".xml"))
+                        {
+                            File.Delete(currFile);
+                            continue;
+                        }
+
+                        // If File, Rename/Move
+                        if (fileExt.Equals(".pdf") || fileExt.Equals(".ai"))
+                        {
+                            if (currFileName.Equals(fnStringArr[5]) || currFileName.Equals(fileName.Replace("_", " ")))
+                            {
+                                // Move & Rename
+                                string currLoc = oldFilePath + "/" + Path.GetFileName(currFile);
+                                string newLoc = newFilePath + "/" + fileName + fileExt;
+                                File.Move(currLoc, newLoc);
+                                fileFound = true;
+                            }
+                        }
+                    }
+                }
+                if (!fileFound)
+                {
+                    sb.Append("- 404 File not Found. Must manually move file");
+                }
+
+            }
+            catch (Exception)
+            {
+                sb.Append("- Unable to Move file");
+            }
+
+            return sb;
         }
 
         #endregion Private Methods
