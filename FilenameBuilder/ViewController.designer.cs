@@ -13,6 +13,9 @@ namespace FilenameBuilder
 	partial class ViewController
 	{
 		[Outlet]
+		AppKit.NSButton AddLogo { get; set; }
+
+		[Outlet]
 		AppKit.NSTextField campNameTxtBox { get; set; }
 
 		[Outlet]
@@ -37,10 +40,10 @@ namespace FilenameBuilder
 		AppKit.NSTextField errorOutputBox { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField filePathTxtBox { get; set; }
+		AppKit.NSTextField finishingTxtBox { get; set; }
 
 		[Outlet]
-		AppKit.NSTextField finishingTxtBox { get; set; }
+		AppKit.NSButton fireworksButton { get; set; }
 
 		[Outlet]
 		AppKit.NSTextField heightTxtBox { get; set; }
@@ -70,6 +73,9 @@ namespace FilenameBuilder
 		AppKit.NSScrollView ScrollView { get; set; }
 
 		[Outlet]
+		AppKit.NSTextField showFilePathTxtBox { get; set; }
+
+		[Outlet]
 		AppKit.NSTextField stockTxtBox { get; set; }
 
 		[Outlet]
@@ -80,6 +86,9 @@ namespace FilenameBuilder
 
 		[Outlet]
 		AppKit.NSTextField widthTxtBox { get; set; }
+
+		[Action ("AddLogoChecked:")]
+		partial void AddLogoChecked (Foundation.NSObject sender);
 
 		[Action ("BuildBtn:")]
 		partial void BuildBtn (Foundation.NSObject sender);
@@ -153,14 +162,14 @@ namespace FilenameBuilder
 				errorOutputBox = null;
 			}
 
-			if (filePathTxtBox != null) {
-				filePathTxtBox.Dispose ();
-				filePathTxtBox = null;
-			}
-
 			if (finishingTxtBox != null) {
 				finishingTxtBox.Dispose ();
 				finishingTxtBox = null;
+			}
+
+			if (fireworksButton != null) {
+				fireworksButton.Dispose ();
+				fireworksButton = null;
 			}
 
 			if (heightTxtBox != null) {
@@ -208,6 +217,11 @@ namespace FilenameBuilder
 				ScrollView = null;
 			}
 
+			if (showFilePathTxtBox != null) {
+				showFilePathTxtBox.Dispose ();
+				showFilePathTxtBox = null;
+			}
+
 			if (stockTxtBox != null) {
 				stockTxtBox.Dispose ();
 				stockTxtBox = null;
@@ -226,6 +240,11 @@ namespace FilenameBuilder
 			if (widthTxtBox != null) {
 				widthTxtBox.Dispose ();
 				widthTxtBox = null;
+			}
+
+			if (AddLogo != null) {
+				AddLogo.Dispose ();
+				AddLogo = null;
 			}
 		}
 	}

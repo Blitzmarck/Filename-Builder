@@ -18,6 +18,8 @@ namespace FilenameBuilder
 
         private List<NSTextField> allTextFields;
 
+        private string logoWanted = "true";
+
         private enum AllowedFiletypes
         {
             xml,
@@ -51,7 +53,7 @@ namespace FilenameBuilder
                 finishingTxtBox,
                 colourTxtBox,
                 commentTxtBox,
-                filePathTxtBox,
+                showFilePathTxtBox,
                 errorOutputBox,
                 resultTxtBox
             };
@@ -259,7 +261,7 @@ namespace FilenameBuilder
 
                 if (dlg.RunModal() == 1)
                 {
-                    filePathTxtBox.StringValue = dlg.DirectoryUrl.Path;
+                    showFilePathTxtBox.StringValue = dlg.DirectoryUrl.Path;
                 }
             };
         }
@@ -284,9 +286,10 @@ namespace FilenameBuilder
                                         revVerTxtBox.StringValue,
                                         finishingTxtBox.StringValue,
                                         colourTxtBox.StringValue,
-                                        commentTxtBox.StringValue});
+                                        commentTxtBox.StringValue,
+                                        logoWanted});
 
-            string filePath = filePathTxtBox.StringValue;
+            string filePath = showFilePathTxtBox.StringValue;
 
             /**Error Check**/
             StringBuilder sb = new StringBuilder();
@@ -403,6 +406,18 @@ namespace FilenameBuilder
         partial void GetPreviousFilenames(NSObject sender)
         {
             PerformSegue("ShowPreviousFilenames", this);
+        }
+
+        partial void AddLogoChecked(NSObject sender)
+        {
+            if(AddLogo.State == NSCellStateValue.On)
+            {
+                logoWanted = "true";
+            }
+            else
+            {
+                logoWanted = "false";
+            }
         }
 
         #endregion Partial Methods

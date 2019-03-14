@@ -23,7 +23,8 @@ namespace FilenameBuilder
                                                 new XElement("revision", input[10]),
                                                 new XElement("finishing", input[11]),
                                                 new XElement("colours", input[12]),
-                                                new XElement("comments", input[13])
+                                                new XElement("comments", input[13]),
+                                                new XElement("logo", input[14])
                                           ));
             return output;
         }

@@ -1000,15 +1000,6 @@
                                     <action selector="RejectCount:" target="XfG-lQ-9wD" id="soE-0l-Dey"/>
                                 </connections>
                             </button>
-                            <textField identifier="FileLocTxtBox" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eww-Az-fNY" userLabel="File Location">
-                                <rect key="frame" x="163" y="192" width="475" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" enabled="NO" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Folder Location" drawsBackground="YES" id="Z2h-me-seI">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" red="0.92541211843490601" green="0.92554181814193726" blue="0.92537122964859009" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </textFieldCell>
-                            </textField>
                             <button identifier="GetFIlePathBtn" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e1P-Ln-L6G">
                                 <rect key="frame" x="640" y="185" width="87" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1072,6 +1063,34 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2Z-fi-TlG" userLabel="File Path">
+                                <rect key="frame" x="163" y="191" width="475" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="qhN-v7-FDJ">
+                                    <rect key="frame" x="1" y="1" width="473" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyv-sf-M6j" userLabel="Error Box">
+                                            <rect key="frame" x="0.0" y="0.0" width="604" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                            <textFieldCell key="cell" selectable="YES" continuous="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" placeholderString="Folder Location" id="nDu-9Q-mMq">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="5ev-A2-VeV">
+                                    <rect key="frame" x="-100" y="-100" width="398" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="CCS-nV-ZQN">
+                                    <rect key="frame" x="399" y="1" width="15" height="68"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-Im-yf8">
                                 <rect key="frame" x="479" y="336" width="79" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1188,9 +1207,32 @@
                                     </subviews>
                                 </view>
                             </box>
+                            <button identifier="HideMe" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wnA-cK-kwr">
+                                <rect key="frame" x="729" y="552" width="21" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" transparent="YES" imageScaling="proportionallyDown" inset="2" id="Bhw-De-Q12">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <segue destination="WKH-bm-kbb" kind="show" id="HEc-AS-axs"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9gS-Lb-KIw">
+                                <rect key="frame" x="469" y="165" width="80" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Add Logo" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kI5-lu-CDc">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="AddLogoChecked:" target="XfG-lQ-9wD" id="bSX-pe-C8Q"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="AddLogo" destination="9gS-Lb-KIw" id="rMp-GF-AQS"/>
                         <outlet property="CountRejectBtn" destination="5st-6l-BWy" id="396-FY-85K"/>
                         <outlet property="CounterStep" destination="iYN-R7-B6D" id="6gP-Pe-MjV"/>
                         <outlet property="HideCountRejectBtn" destination="5st-6l-BWy" id="71X-xi-DIZ"/>
@@ -1201,8 +1243,8 @@
                         <outlet property="counterTxtBox" destination="nIZ-DD-i6F" id="YXs-ch-b6X"/>
                         <outlet property="custCodeTxtBox" destination="KLm-wR-x6h" id="CT9-Lc-Yr8"/>
                         <outlet property="errorOutputBox" destination="dWz-sp-z8e" id="Tfg-5s-fgq"/>
-                        <outlet property="filePathTxtBox" destination="Eww-Az-fNY" id="5Pr-ce-ZUF"/>
                         <outlet property="finishingTxtBox" destination="QKu-eh-4hU" id="1Y2-35-0tc"/>
+                        <outlet property="fireworksButton" destination="wnA-cK-kwr" id="5Am-m8-Eq8"/>
                         <outlet property="heightTxtBox" destination="R6d-HT-LZm" id="mJU-Xd-01J"/>
                         <outlet property="jobNumTxtBox" destination="URZ-hs-qKf" id="dVb-Or-mI7"/>
                         <outlet property="notificationLabel" destination="hPH-OD-9NK" id="omw-B9-buN"/>
@@ -1211,6 +1253,7 @@
                         <outlet property="rejectCheck" destination="Dn4-KE-wjZ" id="LD6-Gr-YtQ"/>
                         <outlet property="resultTxtBox" destination="x6C-tH-WvL" id="VwM-1i-1fK"/>
                         <outlet property="revVerTxtBox" destination="OrY-RP-9rc" id="aQf-R0-gBp"/>
+                        <outlet property="showFilePathTxtBox" destination="yyv-sf-M6j" id="3Pw-8c-Jau"/>
                         <outlet property="stockTxtBox" destination="Qcq-mc-qhq" id="Law-tr-tnf"/>
                         <outlet property="totalPDFsStep" destination="Ess-8f-OVa" id="VFf-28-mpj"/>
                         <outlet property="totalPDFsTxtBox" destination="GBy-uq-YkX" id="q2u-vM-Xre"/>
@@ -1221,6 +1264,47 @@
                 <userDefaultsController representsSharedInstance="YES" id="S4p-Il-Q1Y"/>
             </objects>
             <point key="canvasLocation" x="74" y="893.5"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="j3f-eO-xhc">
+            <objects>
+                <windowController storyboardIdentifier="Fireworks" showSeguePresentationStyle="single" id="5le-WB-osZ" sceneMemberID="viewController">
+                    <window key="window" title="Party!" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Gmx-NA-6oi">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="425" y="461" width="500" height="39"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+                        <connections>
+                            <outlet property="delegate" destination="5le-WB-osZ" id="y2F-cb-l06"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="WKH-bm-kbb" kind="relationship" relationship="window.shadowedContentViewController" id="MSS-gD-DkI"/>
+                    </connections>
+                </windowController>
+                <customObject id="VcW-d2-M0M" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1300" y="605.5"/>
+        </scene>
+        <!--Party!-->
+        <scene sceneID="swn-Zn-ZnV">
+            <objects>
+                <viewController title="Party!" storyboardIdentifier="Fireworks" showSeguePresentationStyle="single" id="WKH-bm-kbb" sceneMemberID="viewController">
+                    <view key="view" id="9ql-qW-nxS">
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="86M-nk-Neg">
+                                <rect key="frame" x="0.0" y="0.0" width="500" height="270"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="Fireworks" id="2iw-cD-01L"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="Qa5-3p-Yez" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1300" y="893"/>
         </scene>
         <!--PrevFilenames-->
         <scene sceneID="7PM-TV-K93">
@@ -1331,7 +1415,13 @@
                 </viewController>
                 <customObject id="rfd-m9-c43" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="952" y="912"/>
+            <point key="canvasLocation" x="74" y="1567"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Fireworks" width="540" height="290"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="MSS-gD-DkI"/>
+    </inferredMetricsTieBreakers>
 </document>

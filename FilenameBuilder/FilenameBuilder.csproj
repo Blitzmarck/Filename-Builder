@@ -66,16 +66,46 @@
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-16.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-16-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-32-2.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-32.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-32-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-64.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-128.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-64-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-128-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-256-2.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-100.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-1024.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-114.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-128.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-144.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-152.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-16.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-167.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-172.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-196.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-20.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-256.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-32.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-48.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-50.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-512.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-55.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-57.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-60.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-64.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-72.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-76.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-80.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\appiconmaker.co_ios\Icon-88.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-256.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-256-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-512-2.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-512.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-512-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-1024.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-1024-1.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -101,6 +131,10 @@
     </Compile>
     <Compile Include="ErrorCheck.cs" />
     <Compile Include="XMLClass.cs" />
+    <Compile Include="FireworksViewController.cs" />
+    <Compile Include="FireworksViewController.designer.cs">
+      <DependentUpon>FireworksViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Main.storyboard" />
@@ -108,6 +142,8 @@
   <ItemGroup>
     <BundleResource Include="Resources\Next Printing Logo Orig.png" />
     <BundleResource Include="Resources\Select All Icon.png" />
+    <BundleResource Include="Resources\Fireworks.gif" />
+    <BundleResource Include="Resources\Next Printing New Logo 2019.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
