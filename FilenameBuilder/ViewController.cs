@@ -27,6 +27,8 @@ namespace FilenameBuilder
             ai
         }
 
+        private string[] fileTypesArray;
+
         public ViewController(IntPtr handle) : base(handle) { }
 
         #region Override Methods
@@ -57,6 +59,9 @@ namespace FilenameBuilder
                 errorOutputBox,
                 resultTxtBox
             };
+            fileTypesArray = Enum.GetValues(typeof(AllowedFiletypes)).OfType<object>().Select(o => o.ToString()).ToArray();
+            // remove XML extension, we only want artwork extensions
+            fileTypesArray = fileTypesArray.Where(w => w != fileTypesArray[0]).ToArray();
         }
 
         public override void ViewWillAppear()
@@ -145,11 +150,7 @@ namespace FilenameBuilder
             dlg.CanChooseFiles = true;
             dlg.CanChooseDirectories = false;
             dlg.AllowsMultipleSelection = true;
-            dlg.AllowedFileTypes = new string[] 
-            {
-                AllowedFiletypes.pdf.ToString(),
-                AllowedFiletypes.ai.ToString()
-            };
+            dlg.AllowedFileTypes = fileTypesArray;
 
             if (dlg.RunModal() == 1)
             {
@@ -490,7 +491,24 @@ namespace FilenameBuilder
                         }
 
                         // If File, Rename/Move
-                        if (fileExt.Equals(".pdf") || fileExt.Equals(".ai"))
+                        bool rightFileExtension = false;
+                        foreach (var item in fileTypesArray)
+                        {
+                            // Skip XML
+                            if (item.Equals(AllowedFiletypes.xml.ToString()))
+                            {
+                                continue;
+                            }
+
+                            // Extension check
+                            if (fileExt.Equals("." + item))
+                            {
+                                rightFileExtension = true;
+                                break;
+                            }
+                        }
+
+                        if (rightFileExtension)
                         {
                             if (currFileName.Equals(fnStringArr[5]) || currFileName.Equals(fileName.Replace("_", " ")))
                             {
